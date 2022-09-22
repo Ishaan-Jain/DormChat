@@ -33,7 +33,7 @@ export class ChatComponent implements OnInit {
     this.user = (userService.getUser());
   }
 
-  ngOnInit(): void {
+   ngOnInit(): void {
     this.username = (this.userService.getUser());
     if(!this.username){
       this.ngOnDestroy()
@@ -45,16 +45,15 @@ export class ChatComponent implements OnInit {
 
     this.userService.getAdminKey().subscribe((key_a)=>{
       this.key = key_a;
-      console.log(this.key)
-      console.log(this.adminKey)
-      console.log(typeof(this.key))
+      if(this.adminKey == this.key){
+        console.log("hiiiiiiiiiii")
+  
+        this.isAdmin = true
+      }
     });
 
-    if(this.adminKey == this.key){
-      console.log("hiiiiiiiiiii")
-
-      this.isAdmin = true
-    }
+    
+    
 
     if(this.room !== "Important Info"){
       this.showSendBar = true
