@@ -46,6 +46,8 @@ export class ChatComponent implements OnInit {
     this.userService.getAdminKey().subscribe((key_a)=>{
       this.key = key_a;
       console.log(this.key)
+      console.log(this.adminKey)
+      console.log(typeof(this.key))
     });
 
     if(this.adminKey == this.key){
