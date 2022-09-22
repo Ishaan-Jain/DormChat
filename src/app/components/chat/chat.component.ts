@@ -31,18 +31,6 @@ export class ChatComponent implements OnInit {
 
   constructor(private userService: SigninService, private router: Router){
     this.user = (userService.getUser());
-    this.adminKey = this.userService.getAdmin();
-
-    this.userService.getAdminKey().subscribe((key_a)=>{
-      this.key = key_a;
-      // console.log(this.key)
-      // console.log(this.adminKey)
-      // console.log(typeof(this.key))
-    });
-
-    if(this.adminKey == this.key){
-      this.isAdmin = true
-    }
   }
 
   ngOnInit(): void {
@@ -53,7 +41,20 @@ export class ChatComponent implements OnInit {
     }
     this.room = this.userService.getRoom()
     this.roomDisplay = this.room
-    
+    this.adminKey = this.userService.getAdmin();
+
+    this.userService.getAdminKey().subscribe((key_a)=>{
+      this.key = key_a;
+      console.log(this.key)
+      console.log(this.adminKey)
+      console.log(typeof(this.key))
+    });
+
+    if(this.adminKey == this.key){
+      console.log("hiiiiiiiiiii")
+
+      this.isAdmin = true
+    }
 
     if(this.room !== "Important Info"){
       this.showSendBar = true
