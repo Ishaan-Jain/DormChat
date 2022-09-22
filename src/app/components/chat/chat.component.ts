@@ -48,7 +48,7 @@ export class ChatComponent implements OnInit {
       console.log(this.key)
     });
 
-    if(this.adminKey === this.key){
+    if(this.adminKey == this.key){
       this.isAdmin = true
     }
 
