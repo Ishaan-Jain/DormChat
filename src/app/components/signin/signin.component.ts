@@ -19,7 +19,18 @@ export class SigninComponent {
  submit(){
     this.userService.setUser(this.username)
     this.userService.setRoom(this.room)
-    this.router.navigate(['chat']);
+    if(this.room === "1-on-1"){
+      if(this.userService.roomFull()){
+        alert("Room full choose different room or wait for room to be empty.");
+      }
+      else{
+        this.router.navigate(['chat']);
+      }
+    }
+    else{
+      this.router.navigate(['chat']);
+    }
+    
   }
 
 }
