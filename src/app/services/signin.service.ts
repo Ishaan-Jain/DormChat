@@ -19,8 +19,8 @@ export class SigninService {
   room : string = "";
   msg : any = []
 
-  apiUrl = "http://localhost:5000/chat";
-  //apiUrl = "https://dorm-chat-b3557aeb4f98.herokuapp.com/chat"
+  //apiUrl = "http://localhost:5000/chat";
+  apiUrl = "https://dorm-chat-b3557aeb4f98.herokuapp.com/chat"
   isfull: boolean = false;
 
 
@@ -52,7 +52,7 @@ export class SigninService {
   }
 
   setUpConnection(room: string, user: string){
-    this.socket = io("http://localhost:5000");
+    this.socket = io();
     return this.socket.emit('room',[room,user]);
   }
 
