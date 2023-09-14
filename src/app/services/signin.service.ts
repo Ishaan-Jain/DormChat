@@ -19,8 +19,8 @@ export class SigninService {
   room : string = "";
   msg : any = []
 
-  //apiUrl = "http://localhost:5000/chat";
-  apiUrl = "https://dorm-chat-b3557aeb4f98.herokuapp.com/chat"
+  apiUrl = "http://localhost:5000/chat";
+  //apiUrl = "https://dorm-chat-b3557aeb4f98.herokuapp.com/chat"
   isfull: boolean = false;
 
 
@@ -52,21 +52,13 @@ export class SigninService {
   }
 
   setUpConnection(room: string, user: string){
-    this.socket = io();
+    this.socket = io("http://localhost:5000");
     return this.socket.emit('room',[room,user]);
   }
 
   getMessages(){
     return  new Observable((observer: Observer<any>)=>{
       this.socket.on('message', (message:any)=>{
-        // if(message === "Full"){
-        //   console.log("byeee")
-        //   this.isfull = true;
-        // }
-        // else{
-        //   observer.next(message);
-        // }
-
         observer.next(message);
         
       })
@@ -109,11 +101,6 @@ export class SigninService {
     }
   }
 
-  dis_1_on_1(){
-    if (this.socket) {
-      this.socket.emit("disconnect for 1-on-1");
-    }
-  }
   
 
 

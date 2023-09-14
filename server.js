@@ -9,8 +9,8 @@ const server = http.createServer(app);
 
 const io = require('socket.io')(server, {
     cors: {
-       origins:['https://dorm-chat-b3557aeb4f98.herokuapp.com/chat']
-      //origins:['https://localhost:4200/chat']
+       //origins:['https://dorm-chat-b3557aeb4f98.herokuapp.com/chat']
+      origins:['https://localhost:4200/chat']
     }
 });
 
@@ -32,6 +32,9 @@ messages = {
     "Just for Fun": []
 }
 
+curr_room = "";
+
+
 //When Client connects
 io.on('connection', (socket) =>{
     console.log("User connectd")
@@ -43,6 +46,7 @@ io.on('connection', (socket) =>{
         const room = obj[0]
         const username = obj[1]
 
+        
         // if(io.sockets.adapter.rooms.get(room) ){
         //     if((io.sockets.adapter.rooms.get(room).size) === 2){
         //         console.log("hiii")
@@ -56,7 +60,7 @@ io.on('connection', (socket) =>{
         else{
 
             socket.join(room);
-            console.log(io.sockets.adapter.rooms);
+            curr_room = room
 
             if(messages[room]){
                 for(i = 0; i < messages[room].length; i++){
@@ -118,6 +122,7 @@ io.on('connection', (socket) =>{
     })
 
 
+
     //Runs when client disconnects
     socket.on('disconnect',()=>{
         console.log('user disconnected')
@@ -129,22 +134,13 @@ io.on('connection', (socket) =>{
         })
         Users = Users.filter(u => u.id !== socket.id);
         io.emit("users",Users);
-        io.emit('message',formatMessage(name,"User has left the chat"));
+        if(curr_room !== "1-on-1"){
+            io.emit('message',formatMessage(name,"User has left the chat"));
+        }
+       
         
     })
 
-    socket.on('disconnect for 1-on-1',()=>{
-        console.log('user disconnected')
-        let name = ""
-        const user = Users.find(u => {
-            if(u.id == socket.id){
-                name = u.username
-            };
-        })
-        Users = Users.filter(u => u.id !== socket.id);
-        io.emit("users",Users);
-        
-    })
 })
 
 

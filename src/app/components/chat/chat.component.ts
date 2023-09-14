@@ -27,7 +27,7 @@ export class ChatComponent implements OnInit {
   ngOnInit(): void {
     this.username = (this.userService.getUser());
     if(!this.username){
-      this.router.navigate([''])
+      this.router.navigate(['/'])
     }
     this.room = this.userService.getRoom()
     this.roomDisplay = this.room
@@ -70,12 +70,8 @@ export class ChatComponent implements OnInit {
 
   ngOnDestroy():void{
     this.userService.resetMessages(this.room)
-    if(localStorage.getItem("room") !== "1-on-1"){
-      this.userService.disconnect();
-    }
-    else{
-      this.userService.dis_1_on_1();
-    }
+    
+    this.userService.disconnect();
     
   }
 
