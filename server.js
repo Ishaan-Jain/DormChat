@@ -17,9 +17,9 @@ connectDB();
 
 app.use('/chat',require('./routes/chat.js'))
 
-app.use(express.static(__dirname + '/dist/my-app'));
+app.use(express.static(__dirname + '/dist/chat-app'));
 app.get('/*', function(req, res) {
-    res.sendFile(path.join(__dirname + '/dist/my-app/index.html'));
+    res.sendFile(path.join(__dirname + '/dist/chat-app/index.html'));
 });
 
 let Users = []
