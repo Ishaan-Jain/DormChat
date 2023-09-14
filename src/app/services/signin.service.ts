@@ -52,32 +52,27 @@ export class SigninService {
   }
 
   setUpConnection(room: string, user: string){
-    this.socket = io('http://localhost:5000');
+    this.socket = io('https://dorm-chat-b3557aeb4f98.herokuapp.com/chat');
     return this.socket.emit('room',[room,user]);
   }
 
   getMessages(){
     return  new Observable((observer: Observer<any>)=>{
       this.socket.on('message', (message:any)=>{
-        if(message === "Full"){
-          this.isfull = true;
-        }
-        else{
-          observer.next(message);
-        }
+        // if(message === "Full"){
+        //   console.log("byeee")
+        //   this.isfull = true;
+        // }
+        // else{
+        //   observer.next(message);
+        // }
+
+        observer.next(message);
         
       })
     })
   }
 
-  roomFull(){
-    if(this.isfull){
-      return true
-    }
-
-    return false
-
-  }
 
   getUsers(){
     return  new Observable((observer: Observer<any>)=>{
@@ -111,6 +106,12 @@ export class SigninService {
   disconnect() {
     if (this.socket) {
         this.socket.disconnect();
+    }
+  }
+
+  dis_1_on_1(){
+    if (this.socket) {
+      this.socket.emit("disconnect for 1-on-1");
     }
   }
   

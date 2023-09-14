@@ -32,6 +32,8 @@ export class ChatComponent implements OnInit {
     this.room = this.userService.getRoom()
     this.roomDisplay = this.room
 
+    localStorage.setItem("room",this.room)
+
     // Database
     if(this.room === "Important Info"){
       this.userService.getMessagesfromDatabase().subscribe((messages_database) => {
@@ -39,10 +41,19 @@ export class ChatComponent implements OnInit {
       })
     }
 
-
     // Socket.io
     this.userService.setUpConnection(this.room,this.username);
+    // if(this.room === "1-on-1"){
+    //   if(this.userService.roomFull()){
+    //     alert("Room full choose different room or wait for room to be empty.");
+    //     this.router.navigate(['']);
+    //   }
+    // }
     this.userService.getMessages().subscribe((msgObj) =>{
+      if(msgObj === "Full"){
+        alert("Room full choose different room or wait for room to be empty.");
+        this.router.navigate(['/']);
+      }
       this.messages.push(msgObj);
     })
     this.userService.getUsers().subscribe((users: any) =>{
@@ -54,13 +65,18 @@ export class ChatComponent implements OnInit {
   ngAfterViewChecked(){
     this.container = document.getElementById("msgContainer")!;         
     this.container.scrollTop = this.container.scrollHeight;
-
   }
 
 
   ngOnDestroy():void{
     this.userService.resetMessages(this.room)
-    this.userService.disconnect();
+    if(localStorage.getItem("room") !== "1-on-1"){
+      this.userService.disconnect();
+    }
+    else{
+      this.userService.dis_1_on_1();
+    }
+    
   }
 
   sendMessage(){

@@ -9,7 +9,7 @@ const server = http.createServer(app);
 
 const io = require('socket.io')(server, {
     cors: {
-        origins:['https://dorm-chat-b3557aeb4f98.herokuapp.com/chat']
+       origins:['https://dorm-chat-b3557aeb4f98.herokuapp.com/chat']
       //origins:['https://localhost:4200/chat']
     }
 });
@@ -33,39 +33,50 @@ messages = {
 }
 
 //When Client connects
-io.on('connection', socket =>{
+io.on('connection', (socket) =>{
     console.log("User connectd")
     //Welcome current user
     socket.emit('message', formatMessage("ChatBot",'Welcome to ChatCord'));
 
     //Brodcast when a user connects
-    socket.on('room',(obj) =>{
+    socket.on('room',async (obj) =>{
         const room = obj[0]
         const username = obj[1]
 
-        console.log(io.sockets.adapter.rooms)
-        if(io.sockets.adapter.rooms.get(room) && (io.sockets.adapter.rooms.get(room).size) > 1 ){
+        // if(io.sockets.adapter.rooms.get(room) ){
+        //     if((io.sockets.adapter.rooms.get(room).size) === 2){
+        //         console.log("hiii")
+        //     }
+            
+        // }
+
+        if(room === "1-on-1" && io.sockets.adapter.rooms.get(room) && (io.sockets.adapter.rooms.get(room).size) > 1 ){
             socket.emit("message","Full")
         }
+        else{
 
-        socket.join(room);
+            socket.join(room);
+            console.log(io.sockets.adapter.rooms);
 
-        if(messages[room]){
-            for(i = 0; i < messages[room].length; i++){
-                socket.emit("message", messages[room][i]);
+            if(messages[room]){
+                for(i = 0; i < messages[room].length; i++){
+                    socket.emit("message", messages[room][i]);
+                }
             }
-        }
 
-        io.to(room).emit("message",
-        formatMessage(username,username + " joined room"));
-        const user = {
-            username: username,
-            id: socket.id
+            io.to(room).emit("message",
+            formatMessage(username,username + " joined room"));
+            const user = {
+                username: username,
+                id: socket.id
+            }
+            Users.push(user);
+            io.to(room).emit("users",Users);  
+
         }
-        Users.push(user);
-        io.to(room).emit("users",Users);  
 
         
+
         
     })
 
@@ -106,6 +117,7 @@ io.on('connection', socket =>{
         }
     })
 
+
     //Runs when client disconnects
     socket.on('disconnect',()=>{
         console.log('user disconnected')
@@ -118,6 +130,20 @@ io.on('connection', socket =>{
         Users = Users.filter(u => u.id !== socket.id);
         io.emit("users",Users);
         io.emit('message',formatMessage(name,"User has left the chat"));
+        
+    })
+
+    socket.on('disconnect for 1-on-1',()=>{
+        console.log('user disconnected')
+        let name = ""
+        const user = Users.find(u => {
+            if(u.id == socket.id){
+                name = u.username
+            };
+        })
+        Users = Users.filter(u => u.id !== socket.id);
+        io.emit("users",Users);
+        
     })
 })
 
