@@ -52,7 +52,7 @@ export class SigninService {
   }
 
   setUpConnection(room: string, user: string){
-    this.socket = io();
+    this.socket = io(); //"http://localhost:5000"
     return this.socket.emit('room',[room,user]);
   }
 

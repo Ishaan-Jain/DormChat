@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit} from '@angular/core';
+import { AfterViewInit, Component, HostListener, OnInit} from '@angular/core';
 import { SigninComponent } from '../signin/signin.component';
 import { SigninService } from 'src/app/services/signin.service';
 import { Router } from '@angular/router';
@@ -67,7 +67,7 @@ export class ChatComponent implements OnInit {
     this.container.scrollTop = this.container.scrollHeight;
   }
 
-
+  @HostListener('unloaded')
   ngOnDestroy():void{
     this.userService.resetMessages(this.room)
     
