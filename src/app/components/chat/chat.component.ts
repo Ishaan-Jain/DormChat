@@ -35,6 +35,11 @@ export class ChatComponent implements OnInit {
 
     localStorage.setItem("room",this.room)
 
+    window.onbeforeunload = () => {
+      console.log("bhjbdjsbjs")
+      this.ngOnDestroy()
+    }
+
     // Database
     if(this.room === "Important Info"){
       this.userService.getMessagesfromDatabase().subscribe((messages_database) => {
@@ -61,7 +66,10 @@ export class ChatComponent implements OnInit {
       this.Users = users;
     })
 
-    window.onbeforeunload = () => this.ngOnDestroy()
+    // window.onbeforeunload = () => {
+    //   console.log("bhjbdjsbjs")
+    //   this.ngOnDestroy()
+    // }
 
   }
 
@@ -72,7 +80,10 @@ export class ChatComponent implements OnInit {
 
   @HostListener('unloaded')
   ngOnDestroy():void{
-    this.userService.resetMessages(this.room)
+    if(this.room){
+      this.userService.resetMessages(this.room)
+    }
+    
     
     this.userService.disconnect();
     
