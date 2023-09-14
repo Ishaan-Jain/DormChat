@@ -14,6 +14,7 @@ router.get("/:room", async (req,res) =>{
     if(room === "Important Info"){
         const messages = await Message.find();
         res.json(messages);
+        return;
     }
     res.json("Navigate to main page")
 })
