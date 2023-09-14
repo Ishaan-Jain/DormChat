@@ -9,9 +9,13 @@ router.use(bodyParser.json())
 
 router.use(cors())
 
-router.get("/", async (req,res) =>{
-    const messages = await Message.find();
-    res.json(messages);
+router.get("/:room", async (req,res) =>{
+    const room = req.params.room;
+    if(room === "Important Info"){
+        const messages = await Message.find();
+        res.json(messages);
+    }
+    res.json("Navigate to main page")
 })
 
 router.post("/", async(req,res) =>{
