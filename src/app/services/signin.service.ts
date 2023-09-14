@@ -52,7 +52,7 @@ export class SigninService {
   }
 
   setUpConnection(room: string, user: string){
-    this.socket = io('https://dorm-chat-b3557aeb4f98.herokuapp.com/chat');
+    this.socket = io();
     return this.socket.emit('room',[room,user]);
   }
 
