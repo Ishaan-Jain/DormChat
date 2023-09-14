@@ -27,6 +27,7 @@ export class ChatComponent implements OnInit {
   ngOnInit(): void {
     this.username = (this.userService.getUser());
     if(!this.username){
+      this.ngOnDestroy()
       this.router.navigate(['/'])
     }
     this.room = this.userService.getRoom()
@@ -59,6 +60,8 @@ export class ChatComponent implements OnInit {
     this.userService.getUsers().subscribe((users: any) =>{
       this.Users = users;
     })
+
+    window.onbeforeunload = () => this.ngOnDestroy()
 
   }
 
