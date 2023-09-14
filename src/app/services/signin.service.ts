@@ -28,7 +28,7 @@ export class SigninService {
   constructor(private http: HttpClient) { }
 
   getMessagesfromDatabase(): Observable<any>{
-    return this.http.get(this.apiUrl + this.room)
+    return this.http.get(this.apiUrl + "/" + this.room)
   }
 
   sendMessagetoDatabse(Obj: any): Observable<any>{
