@@ -17,5 +17,6 @@ export class SigninComponent {
     this.userService.setUser(this.username);
     this.userService.setRoom(this.room);
     this.router.navigate(['chat']);
+    this.room = ""
   }
 }
