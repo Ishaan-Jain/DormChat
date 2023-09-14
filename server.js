@@ -9,7 +9,8 @@ const server = http.createServer(app);
 
 const io = require('socket.io')(server, {
     cors: {
-      origins:['https://localhost:4200/chat']
+        origins:['https://dorm-chat-b3557aeb4f98.herokuapp.com/chat']
+      //origins:['https://localhost:4200/chat']
     }
 });
 
