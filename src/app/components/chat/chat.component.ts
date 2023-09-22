@@ -43,8 +43,10 @@ export class ChatComponent implements OnInit {
     this.roomDisplay = this.room
     this.adminKey = this.userService.getAdmin();
 
-    this.userService.getAdminKey().subscribe((key)=>{
-      this.key = key;
+    this.userService.getAdminKey().subscribe((key_a)=>{
+      this.key = key_a;
+      console.log(this.key)
+      console.log(key_a)
     });
 
     if(this.adminKey === this.key){
