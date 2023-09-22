@@ -20,8 +20,7 @@ router.get("/:room", async (req,res) =>{
     res.json("Navigate to main page")
 })
 
-router.get("/admin-key",(req,res) =>{
-    console.log(process.env.ADMIN)
+router.get("/get/admin-key",(req,res) =>{
     res.json(process.env.ADMIN);
 })
 

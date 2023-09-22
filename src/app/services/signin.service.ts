@@ -113,7 +113,7 @@ export class SigninService {
 
   getAdminKey(): Observable<any>{
 
-    return this.http.get(this.apiUrl + "/admin-key")
+    return this.http.get(this.apiUrl + "/get/admin-key")
 
   }
 
