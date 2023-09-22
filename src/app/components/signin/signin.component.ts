@@ -10,6 +10,7 @@ import { SigninService } from 'src/app/services/signin.service';
 export class SigninComponent {
   username: string = "";
   room: string = ""
+  adminKey: string = ""
   
   constructor(private router: Router, private userService: SigninService){}
 
@@ -18,5 +19,6 @@ export class SigninComponent {
     this.userService.setRoom(this.room);
     this.router.navigate(['chat']);
     this.room = ""
+    this.userService.setAdmin(this.adminKey);
   }
 }

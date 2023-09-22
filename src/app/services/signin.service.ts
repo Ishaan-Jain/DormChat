@@ -18,6 +18,7 @@ export class SigninService {
   socket !: any;
   room : string = "";
   msg : any = []
+  adminKey: string = ""
 
   //apiUrl = "http://localhost:5000/chat";
   apiUrl = "https://dorm-chat-b3557aeb4f98.herokuapp.com/chat"
@@ -52,7 +53,7 @@ export class SigninService {
   }
 
   setUpConnection(room: string, user: string){
-    this.socket = io(); //"http://localhost:5000"
+    this.socket = io(""); //"http://localhost:5000"
     return this.socket.emit('room',[room,user]);
   }
 
@@ -95,10 +96,25 @@ export class SigninService {
   //   return this.msg
   // }
 
+  setAdmin(key: string){
+    this.adminKey = key;
+  }
+
+  getAdmin(){
+    return this.adminKey;
+  }
+
   disconnect() {
     if (this.socket) {
         this.socket.disconnect();
     }
+  }
+
+
+  getAdminKey(): Observable<any>{
+
+    return this.http.get(this.apiUrl + "/admin-key")
+
   }
 
   

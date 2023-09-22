@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const formatMessage = require('../messages')
 const Message = require('../Database/models/message')
+require("dotenv").config()
 
 router.use(bodyParser.json())
 
@@ -17,6 +18,10 @@ router.get("/:room", async (req,res) =>{
         return;
     }
     res.json("Navigate to main page")
+})
+
+router.get("/admin-key",(req,res) =>{
+    res.json(process.env.ADMIN_KEY);
 })
 
 router.post("/", async(req,res) =>{

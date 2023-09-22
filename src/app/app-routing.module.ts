@@ -5,7 +5,8 @@ import { ChatComponent } from './components/chat/chat.component';
 
 const routes: Routes = [
   {path: '', component: SigninComponent},
-  {path:'chat',component: ChatComponent}
+  {path:'chat',component: ChatComponent},
+  {path:'**',redirectTo:''}
 ];
 
 @NgModule({

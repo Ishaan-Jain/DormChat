@@ -45,7 +45,7 @@
           required
           autocomplete="off"
         />
-        <button (click)="sendMessage()" class="btn"><i class="fas fa-paper-plane"></i> Send</button>
+        <button *ngIf="isAdmin || showSendBar" (click)="sendMessage()" class="btn"><i class="fas fa-paper-plane"></i> Send</button>
       </form>
     </div>
   </div>

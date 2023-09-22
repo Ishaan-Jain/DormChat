@@ -3,6 +3,7 @@ import { SigninComponent } from '../signin/signin.component';
 import { SigninService } from 'src/app/services/signin.service';
 import { Router } from '@angular/router';
 
+
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
@@ -19,6 +20,14 @@ export class ChatComponent implements OnInit {
   container !: HTMLElement;
   roomDisplay!:string;
 
+  adminKey !: string;
+  key: string = "";
+
+
+  isAdmin: boolean = false;
+
+  showSendBar!: boolean
+
 
   constructor(private userService: SigninService, private router: Router){
     this.user = (userService.getUser());
@@ -32,11 +41,25 @@ export class ChatComponent implements OnInit {
     }
     this.room = this.userService.getRoom()
     this.roomDisplay = this.room
+    this.adminKey = this.userService.getAdmin();
+
+    this.userService.getAdminKey().subscribe((key)=>{
+      this.key = key;
+    });
+
+    if(this.adminKey === this.key){
+      this.isAdmin = true
+    }
+
+    if(this.room !== "Important Info"){
+      this.showSendBar = true
+    }
+
 
     localStorage.setItem("room",this.room)
 
     window.onbeforeunload = () => {
-      console.log("bhjbdjsbjs")
+      //console.log("bhjbdjsbjs")
       this.ngOnDestroy()
     }
 

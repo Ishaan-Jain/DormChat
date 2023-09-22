@@ -32,6 +32,17 @@
 						/>
 					</div>
 					<div class="form-control">
+						<label for="username">Admin Key</label>
+						<input
+                            [(ngModel)]="adminKey"
+							type="text"
+							name="username"
+							id="username"
+							placeholder="Enter adminKey..."
+							required
+						/>
+					</div>
+					<div class="form-control">
 						<label for="room">Room</label>
 						<select [(ngModel)]="room" name="room" id="room">
 							<option value="Important Info">Important Info</option>

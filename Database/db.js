@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
+require("dotenv").config()
 
-MONGO_URI = "mongodb+srv://User:masterchef@cluster0.zywcanw.mongodb.net/DormChat?retryWrites=true&w=majority";
+
+MONGO_URI = process.env.MONGO_URI
 
 const connectDB = async()=>{
   try{
