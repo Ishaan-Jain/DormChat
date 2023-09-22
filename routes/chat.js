@@ -21,7 +21,7 @@ router.get("/:room", async (req,res) =>{
 })
 
 router.get("/admin-key",(req,res) =>{
-    res.json(process.env.ADMIN_KEY);
+    res.json(process.env.ADMIN);
 })
 
 router.post("/", async(req,res) =>{
